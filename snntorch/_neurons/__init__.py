@@ -10,6 +10,7 @@
 
 __neuron__ = [
     "alpha",
+    "aleaky",
     "lapicque",
     "leaky",
     "rleaky",
