@@ -257,7 +257,7 @@ class ALeaky(LIF):
             return spk, self.mem, self.threshold_adapt, self.threshold
 
     def _base_state_function(self, input_):
-        base_fn = self.beta.clamp(0, 1) * self.mem + input_
+        base_fn = self.beta.clamp(0, 1) * self.mem + input_ * (self.reset != 1)
         return base_fn
 
     def _base_sub(self, input_):
