@@ -264,6 +264,7 @@ class ALeaky(LIF):
         return self._base_state_function(input_) - self.reset * self.threshold
 
     def _base_zero(self, input_):
+        # return self._base_state_function(input_) - (1-self.reset) * self._base_state_function(input_)
         self.mem = (1 - self.reset) * self.mem
         return self._base_state_function(input_)
 

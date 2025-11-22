@@ -27,7 +27,7 @@ from .aleaky import ALeaky
 from .lapicque import Lapicque
 from .leaky import Leaky
 from .synaptic import Synaptic
-
+from .aleaky import ALeaky
 from .rleaky import RLeaky
 from .rsynaptic import RSynaptic
 
