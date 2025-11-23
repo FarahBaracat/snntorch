@@ -1,4 +1,4 @@
-from .neurons import LIF
+from .neurons import LIF, _SpikeTensor
 import torch
 from torch import nn
 
@@ -197,8 +197,9 @@ class ALeaky(LIF):
         self.register_buffer("threshold_adapt", threshold_adapt, False)
 
     def reset_mem(self):
-        self.mem = torch.zeros_like(self.mem, device=self.mem.device)
-        self.threshold_adapt = torch.zeros_like(self.threshold_adapt, device=self.threshold_adapt.device)
+        self.mem = _SpikeTensor(init_flag=False)#torch.zeros_like(self.mem, device=self.mem.device)
+        self.threshold_adapt = _SpikeTensor(init_flag=False)#torch.zeros_like(self.threshold_adapt, device=self.threshold_adapt.device)
+        self.threshold = self.base_threshold.clone()
         return self.mem, self.threshold_adapt
 
     def init_aleaky(self):
@@ -221,6 +222,9 @@ class ALeaky(LIF):
         if not self.threshold_adapt.shape == input_.shape:
             self.threshold_adapt = torch.zeros_like(input_, device=self.threshold_adapt.device)
         
+        if not self.threshold.shape == self.threshold_adapt.shape:
+            self.threshold = self.base_threshold.clone()
+            
         self.reset = self.mem_reset(self.mem)
         self.threshold = self.base_threshold + self.threshold_adapt.clone()
 
